@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducers';
-import { MultiplicarAction, DividirAction } from '../contador.actions';
+import * as actions from '../contador.actions';
 
 @Component({
     selector: 'app-hijo',
@@ -10,34 +10,9 @@ import { MultiplicarAction, DividirAction } from '../contador.actions';
 })
 export class HijoComponent implements OnInit {
 
-    // Con Redux esto de aqui ya no es necesario
-    // @Input() contador: any;
-    // @Output() cambioContador = new EventEmitter<number>();
-
     contador: any;
 
     constructor(private store: Store<AppState>) { }
-
-    multiplicar() {
-        // this.contador *= 2;
-        // this.cambioContador.emit(this.contador)
-
-        const action = new MultiplicarAction(2);
-        this.store.dispatch(action);
-    }
-
-    dividir() {
-        this.contador /= 2;
-        // this.cambioContador.emit(this.contador)
-
-        const action = new DividirAction(2);
-        this.store.dispatch(action);
-    }
-
-    resetNieto( nuevoContador ) {
-        this.contador = nuevoContador;
-        // this.cambioContador.emit(this.contador)
-    }
 
     ngOnInit(): void {
         this.store.select('contador').subscribe( state => {
@@ -46,4 +21,11 @@ export class HijoComponent implements OnInit {
         })
     }
 
+    multiplicar() {
+        this.store.dispatch(actions.multiplicar({numero: 2}))
+    }
+
+    dividir() {
+        this.store.dispatch(actions.dividir({ numero : 2}))
+    }
 }
