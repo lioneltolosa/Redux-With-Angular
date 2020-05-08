@@ -12,15 +12,10 @@ export class AppComponent {
     contador: number
 
     constructor( private store: Store<AppState>) {
-        //this.contador = 10;
-        this.store.select('contador').subscribe( state => {
-           this.contador = state;
-           console.log(state);
-        })
+        this.store.select('contador').subscribe( state => this.contador = state)
     }
 
     incrementar() {
-        //this.contador ++;
         const action = new IncrementarAction();
         // this.store.dispatch({type: 'INCREMENTAR'})
         this.store.dispatch( action )
